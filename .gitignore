@@ -1,0 +1,17 @@
+# .NET
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+.vs/
+
+# 日志与本地数据
+logs/
+*.log
+
+# 编辑器/系统
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini

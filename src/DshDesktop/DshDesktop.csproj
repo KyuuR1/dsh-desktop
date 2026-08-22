@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>DshDesktop</RootNamespace>
+    <AssemblyName>DshDesktop</AssemblyName>
+    <Version>0.1.0</Version>
+    <Product>DeepSeek Harness Desktop</Product>
+    <Description>Windows desktop tray launcher for DeepSeek Harness (dsh) with an embedded WebView2 UI.</Description>
+    <ApplicationIcon>..\..\assets\app.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- WebView2 包附带 WPF 程序集，与本项目无关，屏蔽其 WindowsBase 版本冲突警告 -->
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\assets\app.ico" LogicalName="DshDesktop.app.ico" />
+    <None Include="..\..\assets\app.ico" Link="assets\app.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- 确保发布产物中 exe 同目录存在 assets\app.ico（免编译换图标功能依赖它） -->
+  <Target Name="EnsureAppIconInPublish" AfterTargets="Publish" Condition="'$(PublishDir)' != ''">
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\..\assets\app.ico"
+          DestinationFolder="$(PublishDir)assets"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>
